@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
 
 import java.sql.Types;
 
@@ -26,7 +27,7 @@ public class Media {
     @ToString.Exclude
     private MediaType mediaType;
 
-    @Column(name = "file_data", columnDefinition = "BLOB")
+    @Column(name = "file_data", columnDefinition = "bytea")
     @JdbcTypeCode(Types.VARBINARY)
     @NotNull
     private byte[] fileData;

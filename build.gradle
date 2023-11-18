@@ -4,6 +4,7 @@ plugins {
     id 'io.freefair.lombok' version '6.5.1'
     id "org.flywaydb.flyway" version "9.20.0"
     id 'java'
+
 }
 
 group = 'com'
@@ -33,7 +34,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:3.0.8'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.0.8'
     implementation 'org.springframework.boot:spring-boot-starter-validation:3.0.8'
-    implementation 'org.flywaydb:flyway-core:9.7.0'
+//    implementation 'org.flywaydb:flyway-core:9.7.0'
     implementation 'org.postgresql:postgresql:42.6.0'
     implementation 'org.modelmapper:modelmapper:3.1.0'
     implementation 'org.springframework.boot:spring-boot-starter-security:3.0.8'
@@ -43,7 +44,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'org.springframework.security:spring-security-test:6.1.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.1.1'
-    testImplementation 'org.flywaydb.flyway-test-extensions:flyway-spring-test:9.5.0'
+//    testImplementation 'org.flywaydb.flyway-test-extensions:flyway-spring-test:9.5.0'
     testImplementation 'org.assertj:assertj-core:3.24.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0-RC1'
     implementation 'org.springframework.boot:spring-boot-starter-mail:3.1.2'

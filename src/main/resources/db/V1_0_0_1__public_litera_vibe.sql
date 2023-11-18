@@ -1,3 +1,5 @@
+create schema litera_vibe;
+
 CREATE TABLE IF NOT EXISTS litera_vibe.media_types
 (
     id        bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
