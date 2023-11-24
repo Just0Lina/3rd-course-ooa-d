@@ -34,9 +34,6 @@ public class Book {
     @ToString.Exclude
     private Publisher publisher;
 
-//    @ManyToMany(mappedBy = "books")
-////    @ToString.Exclude
-//    private Set<Author> author;
 
     @ManyToMany(mappedBy = "books")
     private List<Author> authors = new ArrayList<>();

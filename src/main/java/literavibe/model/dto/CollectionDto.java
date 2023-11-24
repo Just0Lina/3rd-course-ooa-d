@@ -8,20 +8,26 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 /**
- * CategoryDto
+ * CollectionDto
  */
 @Validated
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-11-24T06:59:10.235174255Z[GMT]")
 
 
-public class CategoryDto   {
+public class CollectionDto   {
   @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("id")
-  private Long id = null;
+  @JsonProperty("number")
+  private Integer number = null;
 
-  public CategoryDto name(String name) {
+  @JsonProperty("id")
+  private Integer id = null;
+
+  @JsonProperty("media_id")
+  private Long mediaId = null;
+
+  public CollectionDto name(String name) {
     this.name = name;
     return this;
   }
@@ -40,7 +46,26 @@ public class CategoryDto   {
     this.name = name;
   }
 
-  public CategoryDto id(Long id) {
+  public CollectionDto number(Integer number) {
+    this.number = number;
+    return this;
+  }
+
+  /**
+   * Get number
+   * @return number
+   **/
+      @NotNull
+
+    public Integer getNumber() {
+    return number;
+  }
+
+  public void setNumber(Integer number) {
+    this.number = number;
+  }
+
+  public CollectionDto id(Integer id) {
     this.id = id;
     return this;
   }
@@ -51,12 +76,31 @@ public class CategoryDto   {
    **/
       @NotNull
 
-    public Long getId() {
+    public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
+  }
+
+  public CollectionDto mediaId(Long mediaId) {
+    this.mediaId = mediaId;
+    return this;
+  }
+
+  /**
+   * Get mediaId
+   * @return mediaId
+   **/
+      @NotNull
+
+    public Long getMediaId() {
+    return mediaId;
+  }
+
+  public void setMediaId(Long mediaId) {
+    this.mediaId = mediaId;
   }
 
 
@@ -68,23 +112,27 @@ public class CategoryDto   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CategoryDto categoryDto = (CategoryDto) o;
-    return Objects.equals(this.name, categoryDto.name) &&
-        Objects.equals(this.id, categoryDto.id);
+    CollectionDto collectionDto = (CollectionDto) o;
+    return Objects.equals(this.name, collectionDto.name) &&
+        Objects.equals(this.number, collectionDto.number) &&
+        Objects.equals(this.id, collectionDto.id) &&
+        Objects.equals(this.mediaId, collectionDto.mediaId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, id);
+    return Objects.hash(name, number, id, mediaId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CategoryDto {\n");
+    sb.append("class CollectionDto {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    number: ").append(toIndentedString(number)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    mediaId: ").append(toIndentedString(mediaId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1,5 +1,6 @@
 package literavibe.security.service.impl;
 
+import literavibe.model.dto.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -69,19 +70,20 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.ok(new IdDto().id(savedUser.getId()));
     }
 
-//    @Override
-//    public ResponseEntity<UserProfileDto> getUserProfile() throws Exception {
-//        JwtAuthentication principal = getAuthInfo();
-//        if (principal == null) {
-//            throw new AuthException("Not authorized yet");
-//        }
-//        User user = FindUtils.findUser(userRepository, principal.getLogin());
+    @Override
+    public ResponseEntity<UserDto> getUserProfile() throws Exception {
+        JwtAuthentication principal = getAuthInfo();
+        if (principal == null) {
+            throw new AuthException("Not authorized yet");
+        }
+        User user = FindUtils.findUser(userRepository, principal.getLogin());
+        UserDto userDto = mapper.map(user, UserDto.class);
 //        UserInfo userInfo = userInfoRepository.findById(user.getId()).orElseThrow(
 //                () -> new UserException("Couldn't find user info"));
 //        UserProfileDto userDto = mapper.map(userInfo, UserProfileDto.class);
 //        userDto.setId(user.getId());
-//        return ResponseEntity.ok(userDto);
-//    }
+        return ResponseEntity.ok(userDto);
+    }
 
 //    @Override
 //    public ResponseEntity<List<UserProfileDto>> getUserProfile(String login, Integer limit) throws Exception {
@@ -113,27 +115,29 @@ public class UserServiceImpl implements UserService {
 //    }
 
 
-//    @Override
-//    public ResponseEntity<IdDto> profileUpdate(UserProfileDto profileDto) throws BadRequestException,
-//            NotFoundException {
-//        if (!AuthServiceCommon.checkAuthorities(profileDto.getId())) {
-//            throw new BadRequestException("No rights");
-//        }
-//        User user = FindUtils.findUser(userRepository, profileDto.getId());
-//        setUserInfo(profileDto, userInfo);
-//        Media media = null;
-//        Long oldMediaId = null;
-//        Long mediaId = profileDto.getMediaId();
-//        if (mediaId != null) {
-//            media = FindUtils.findMedia(mediaRepository, mediaId);
-//        }
-//        if (oldMediaId != null) {
-//            if (media == null || !Objects.equals(media.getId(), oldMediaId)) {
-//                mediaRepository.deleteById(oldMediaId);
-//            }
-//        }
-//        return ResponseEntity.ok(new IdDto().id(userInfo.getId()));
-//    }
+    @Override
+    public ResponseEntity<IdDto> profileUpdate(UserDto profileDto) throws BadRequestException,
+            NotFoundException {
+        if (!AuthServiceCommon.checkAuthorities(profileDto.getLogin())) {
+            throw new BadRequestException("No rights");
+        }
+        User user = FindUtils.findUser(userRepository, profileDto.getLogin());
+        user.setEmail(profileDto.getEmail());
+        user.setDisplayName(profileDto.getDisplayName());
+        userRepository.save(user);
+        Media media = null;
+        Long oldMediaId = null;
+        Long mediaId = profileDto.getMediaId();
+        if (mediaId != null) {
+            media = FindUtils.findMedia(mediaRepository, mediaId);
+        }
+        if (oldMediaId != null) {
+            if (media == null || !Objects.equals(media.getId(), oldMediaId)) {
+                mediaRepository.deleteById(oldMediaId);
+            }
+        }
+        return ResponseEntity.ok(new IdDto().id(user.getId()));
+    }
 
 //    private static void setUserInfo(UserProfileDto profileDto, UserInfo userInfo) {
 //        userInfo.setInfo(profileDto.getInfo());
@@ -142,21 +146,21 @@ public class UserServiceImpl implements UserService {
 //        userInfo.setDisplayName(profileDto.getDisplayName());
 //    }
 
-//    @Override
-//    public ResponseEntity<IdDto> profilePost(UserProfileDto profileDto) throws BadRequestException, NotFoundException,
-//            UserException {
-//        if (!AuthServiceCommon.checkAuthorities(profileDto.getId())) {
-//            throw new BadRequestException("No rights");
+    @Override
+    public ResponseEntity<IdDto> profilePost(UserDto profileDto) throws BadRequestException, NotFoundException,
+            UserException {
+        if (!AuthServiceCommon.checkAuthorities(profileDto.getLogin())) {
+            throw new BadRequestException("No rights");
+        }
+//        UserInfo userInfo = mapper.map(profileDto, UserInfo.class);
+        User user = FindUtils.findUser(userRepository, profileDto.getLogin());
+//        if (user.getUserInfo() != null) {
+//            throw new UserException("User info already exists");
 //        }
-////        UserInfo userInfo = mapper.map(profileDto, UserInfo.class);
-//        User user = FindUtils.findUser(userRepository, profileDto.getId());
-////        if (user.getUserInfo() != null) {
-////            throw new UserException("User info already exists");
-////        }
-////        userInfo.setUser(user);
-////        UserInfo newUser = userInfoRepository.save(userInfo);
-//        return ResponseEntity.ok(new IdDto().id(user.getId()));
-//    }
+//        userInfo.setUser(user);
+//        UserInfo newUser = userInfoRepository.save(userInfo);
+        return ResponseEntity.ok(new IdDto().id(user.getId()));
+    }
 
     public ResponseEntity<IdDto> updateUserPassword(UserDto userDto) throws NotFoundException, BadRequestException {
         if (!AuthServiceCommon.checkAuthorities(userDto.getLogin())) {
@@ -168,3 +172,5 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.ok(new IdDto().id(savedUser.getId()));
     }
 }
+
+

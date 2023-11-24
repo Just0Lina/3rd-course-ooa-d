@@ -1,5 +1,6 @@
 package literavibe.security.service;
 
+import literavibe.model.dto.UserDto;
 import org.springframework.http.ResponseEntity;
 import literavibe.model.dto.IdDto;
 import literavibe.model.dto.UserDto;
@@ -12,10 +13,11 @@ import java.util.List;
 public interface UserService {
     ResponseEntity<IdDto> postUser(UserDto userDto) throws NotFoundException, BadRequestException, UserException;
 
-//    ResponseEntity<UserProfileDto> getUserProfile() throws Exception;
+
+    ResponseEntity<UserDto> getUserProfile() throws Exception;
 //    ResponseEntity<List<UserProfileDto>>getUserProfile(String login, Integer limit) throws Exception;
 
 
-//    ResponseEntity<IdDto> profileUpdate(UserProfileDto profileDto) throws BadRequestException, NotFoundException;
-//    ResponseEntity<IdDto> profilePost(UserProfileDto profileDto) throws BadRequestException, NotFoundException, UserException;
+    ResponseEntity<IdDto> profileUpdate(UserDto profileDto) throws BadRequestException, NotFoundException;
+    ResponseEntity<IdDto> profilePost(UserDto profileDto) throws BadRequestException, NotFoundException, UserException;
 }

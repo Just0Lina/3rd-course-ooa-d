@@ -1,18 +1,18 @@
 package literavibe.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import org.springframework.validation.annotation.Validated;
-
 import java.util.List;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import org.springframework.validation.annotation.Validated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 
 /**
  * BookDto
  */
 @Validated
-@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-09-21T03:26:12.977088839Z[GMT]")
+@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-11-24T06:59:10.235174255Z[GMT]")
 
 
 public class BookDto   {
@@ -31,12 +31,6 @@ public class BookDto   {
   @JsonProperty("info")
   private String info = null;
 
-//  @JsonProperty("author_id")
-//  private String authorId = null;
-
-  @JsonProperty("authors")
-  private List<AuthorDto> authors;
-
   public List<AuthorDto> getAuthors() {
     return authors;
   }
@@ -44,6 +38,9 @@ public class BookDto   {
   public void setAuthors(List<AuthorDto> authors) {
     this.authors = authors;
   }
+
+  @JsonProperty("authors")
+  private List<AuthorDto> authors;
 
   @JsonProperty("year")
   private Integer year = null;
@@ -192,14 +189,14 @@ public class BookDto   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BookDto booksDto = (BookDto) o;
-    return Objects.equals(this.name, booksDto.name) &&
-        Objects.equals(this.id, booksDto.id) &&
-        Objects.equals(this.mediaId, booksDto.mediaId) &&
-        Objects.equals(this.pages, booksDto.pages) &&
-        Objects.equals(this.info, booksDto.info) &&
-        Objects.equals(this.year, booksDto.year) &&
-        Objects.equals(this.publisherId, booksDto.publisherId);
+    BookDto bookDto = (BookDto) o;
+    return Objects.equals(this.name, bookDto.name) &&
+        Objects.equals(this.id, bookDto.id) &&
+        Objects.equals(this.mediaId, bookDto.mediaId) &&
+        Objects.equals(this.pages, bookDto.pages) &&
+        Objects.equals(this.info, bookDto.info) &&
+        Objects.equals(this.year, bookDto.year) &&
+        Objects.equals(this.publisherId, bookDto.publisherId);
   }
 
   @Override
@@ -217,6 +214,7 @@ public class BookDto   {
     sb.append("    mediaId: ").append(toIndentedString(mediaId)).append("\n");
     sb.append("    pages: ").append(toIndentedString(pages)).append("\n");
     sb.append("    info: ").append(toIndentedString(info)).append("\n");
+    sb.append("    authors: ").append(toIndentedString(authors)).append("\n");
     sb.append("    year: ").append(toIndentedString(year)).append("\n");
     sb.append("    publisherId: ").append(toIndentedString(publisherId)).append("\n");
     sb.append("}");

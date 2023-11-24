@@ -11,7 +11,7 @@ import jakarta.validation.constraints.*;
  * UserDto
  */
 @Validated
-@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-09-21T03:26:12.977088839Z[GMT]")
+@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-11-24T06:59:10.235174255Z[GMT]")
 
 
 public class UserDto   {
@@ -21,6 +21,8 @@ public class UserDto   {
   @JsonProperty("password")
   private String password = null;
 
+  @JsonProperty("display_name")
+  private String displayName = null;
 
   @JsonProperty("media_id")
   private Long mediaId = null;
@@ -66,6 +68,24 @@ public class UserDto   {
     this.password = password;
   }
 
+  public UserDto displayName(String displayName) {
+    this.displayName = displayName;
+    return this;
+  }
+
+  /**
+   * Get displayName
+   * @return displayName
+   **/
+      @NotNull
+
+    public String getDisplayName() {
+    return displayName;
+  }
+
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
 
   public UserDto mediaId(Long mediaId) {
     this.mediaId = mediaId;
@@ -117,13 +137,14 @@ public class UserDto   {
     UserDto userDto = (UserDto) o;
     return Objects.equals(this.login, userDto.login) &&
         Objects.equals(this.password, userDto.password) &&
+        Objects.equals(this.displayName, userDto.displayName) &&
         Objects.equals(this.mediaId, userDto.mediaId) &&
         Objects.equals(this.email, userDto.email);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(login, password, mediaId, email);
+    return Objects.hash(login, password, displayName, mediaId, email);
   }
 
   @Override
@@ -133,6 +154,7 @@ public class UserDto   {
     
     sb.append("    login: ").append(toIndentedString(login)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n");
     sb.append("    mediaId: ").append(toIndentedString(mediaId)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("}");

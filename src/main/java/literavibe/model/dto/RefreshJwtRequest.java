@@ -8,55 +8,32 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 /**
- * CategoryDto
+ * RefreshJwtRequest
  */
 @Validated
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-11-24T06:59:10.235174255Z[GMT]")
 
 
-public class CategoryDto   {
-  @JsonProperty("name")
-  private String name = null;
+public class RefreshJwtRequest   {
+  @JsonProperty("refreshToken")
+  private String refreshToken = null;
 
-  @JsonProperty("id")
-  private Long id = null;
-
-  public CategoryDto name(String name) {
-    this.name = name;
+  public RefreshJwtRequest refreshToken(String refreshToken) {
+    this.refreshToken = refreshToken;
     return this;
   }
 
   /**
-   * Get name
-   * @return name
+   * Get refreshToken
+   * @return refreshToken
    **/
-      @NotNull
-
-  @Size(max=128)   public String getName() {
-    return name;
+  
+    public String getRefreshToken() {
+    return refreshToken;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public CategoryDto id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-   **/
-      @NotNull
-
-    public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
+  public void setRefreshToken(String refreshToken) {
+    this.refreshToken = refreshToken;
   }
 
 
@@ -68,23 +45,21 @@ public class CategoryDto   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CategoryDto categoryDto = (CategoryDto) o;
-    return Objects.equals(this.name, categoryDto.name) &&
-        Objects.equals(this.id, categoryDto.id);
+    RefreshJwtRequest refreshJwtRequest = (RefreshJwtRequest) o;
+    return Objects.equals(this.refreshToken, refreshJwtRequest.refreshToken);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, id);
+    return Objects.hash(refreshToken);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CategoryDto {\n");
+    sb.append("class RefreshJwtRequest {\n");
     
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    refreshToken: ").append(toIndentedString(refreshToken)).append("\n");
     sb.append("}");
     return sb.toString();
   }

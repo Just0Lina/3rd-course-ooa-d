@@ -8,23 +8,20 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 /**
- * MarkDto
+ * JwtRequest
  */
 @Validated
 @jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-11-24T06:59:10.235174255Z[GMT]")
 
 
-public class MarkDto   {
+public class JwtRequest   {
   @JsonProperty("login")
   private String login = null;
 
-  @JsonProperty("book_id")
-  private Long bookId = null;
+  @JsonProperty("password")
+  private String password = null;
 
-  @JsonProperty("mark")
-  private Integer mark = null;
-
-  public MarkDto login(String login) {
+  public JwtRequest login(String login) {
     this.login = login;
     return this;
   }
@@ -33,9 +30,8 @@ public class MarkDto   {
    * Get login
    * @return login
    **/
-      @NotNull
-
-  @Size(max=32)   public String getLogin() {
+  
+    public String getLogin() {
     return login;
   }
 
@@ -43,42 +39,22 @@ public class MarkDto   {
     this.login = login;
   }
 
-  public MarkDto bookId(Long bookId) {
-    this.bookId = bookId;
+  public JwtRequest password(String password) {
+    this.password = password;
     return this;
   }
 
   /**
-   * Get bookId
-   * @return bookId
+   * Get password
+   * @return password
    **/
-      @NotNull
-
-    public Long getBookId() {
-    return bookId;
+  
+    public String getPassword() {
+    return password;
   }
 
-  public void setBookId(Long bookId) {
-    this.bookId = bookId;
-  }
-
-  public MarkDto mark(Integer mark) {
-    this.mark = mark;
-    return this;
-  }
-
-  /**
-   * Оценка от 1 до 5
-   * @return mark
-   **/
-      @NotNull
-
-    public Integer getMark() {
-    return mark;
-  }
-
-  public void setMark(Integer mark) {
-    this.mark = mark;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
 
@@ -90,25 +66,23 @@ public class MarkDto   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MarkDto markDto = (MarkDto) o;
-    return Objects.equals(this.login, markDto.login) &&
-        Objects.equals(this.bookId, markDto.bookId) &&
-        Objects.equals(this.mark, markDto.mark);
+    JwtRequest jwtRequest = (JwtRequest) o;
+    return Objects.equals(this.login, jwtRequest.login) &&
+        Objects.equals(this.password, jwtRequest.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(login, bookId, mark);
+    return Objects.hash(login, password);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class MarkDto {\n");
+    sb.append("class JwtRequest {\n");
     
     sb.append("    login: ").append(toIndentedString(login)).append("\n");
-    sb.append("    bookId: ").append(toIndentedString(bookId)).append("\n");
-    sb.append("    mark: ").append(toIndentedString(mark)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("}");
     return sb.toString();
   }

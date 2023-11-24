@@ -1,18 +1,18 @@
 package literavibe.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.validation.annotation.Validated;
-
-import java.time.OffsetDateTime;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import java.time.OffsetDateTime;
+import org.springframework.validation.annotation.Validated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 
 /**
  * CommentDto
  */
 @Validated
-@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-09-21T03:26:12.977088839Z[GMT]")
+@jakarta.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2023-11-24T06:59:10.235174255Z[GMT]")
 
 
 public class CommentDto   {
@@ -50,14 +50,14 @@ public class CommentDto   {
     this.id = id;
   }
 
-  public CommentDto userId(String userId) {
-    this.login = userId;
+  public CommentDto login(String login) {
+    this.login = login;
     return this;
   }
 
   /**
-   * Get userId
-   * @return userId
+   * Get login
+   * @return login
    **/
       @NotNull
 
@@ -154,7 +154,7 @@ public class CommentDto   {
     sb.append("class CommentDto {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    userId: ").append(toIndentedString(login)).append("\n");
+    sb.append("    login: ").append(toIndentedString(login)).append("\n");
     sb.append("    bookId: ").append(toIndentedString(bookId)).append("\n");
     sb.append("    postTime: ").append(toIndentedString(postTime)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");

@@ -27,6 +27,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "display_name")
+    private String displayName;
+
 //    @OneToMany(mappedBy = "author")
 //    @ToString.Exclude
 //    private List<Book> books;
