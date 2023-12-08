@@ -74,6 +74,7 @@ public class BookServiceImpl implements BookService {
             limit = 0;
         }
         List<Book> books = findBooksByName(name, limit);
+        mapper.addConverter(new DateToYearConverter());
         List<BookDto> bookDtos = books.stream().map(book -> mapper.map(book, BookDto.class)).toList();
         return ResponseEntity.ok(bookDtos);
     }
@@ -129,6 +130,7 @@ public class BookServiceImpl implements BookService {
     private ResponseEntity<List<BookDto>> getListResponseEntity(Collection collection) {
         List<Long> bookIds = collectionRepository.findBookIdsInCollection(collection.getId());
         List<Book> books = bookRepository.findByIds(bookIds);
+        mapper.addConverter(new DateToYearConverter());
         List<BookDto> bookDtos = books.stream().map(
                 element -> mapper.map(element, BookDto.class)).toList();
         return ResponseEntity.ok(bookDtos);

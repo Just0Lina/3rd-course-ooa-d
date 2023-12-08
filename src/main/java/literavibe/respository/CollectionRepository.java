@@ -26,10 +26,8 @@ public interface CollectionRepository extends CrudRepository<Collection, Long> {
     @Modifying()
     @Transactional
     @Query(value = """
-            INSERT INTO litera_vibe.collections_distribution(collection_id, book_id) VALUES (:collectionId, :bookId);
-            UPDATE litera_vibe.collections
-            SET number=number+1
-            WHERE  id=:collectionId
+            INSERT INTO litera_vibe.collections_distribution(collection_id, book_id)
+             VALUES (:collectionId, :bookId)
             """, nativeQuery = true)
     void addBookToCollection(long bookId, long collectionId);
 
@@ -41,7 +39,7 @@ public interface CollectionRepository extends CrudRepository<Collection, Long> {
             """, nativeQuery = true)
     void deleteBookFromCollection(Long bookId, Long collectionId);
 
-    List<Collection> findByAuthorId(Long id);
+//    List<Collection> findByAuthorId(Long id);
 
     @Query(value = """
           SELECT * FROM litera_vibe.collections 
@@ -50,11 +48,11 @@ public interface CollectionRepository extends CrudRepository<Collection, Long> {
             """, nativeQuery = true)
     Optional<Collection> findBook(Long bookId, Long collectionId);
 
-    @Query(value = """
-          SELECT * FROM litera_vibe.collections 
-          WHERE author_id =:id AND name=:name
-            """, nativeQuery = true)
-    Optional<Collection> findByAuthorIdUserBookCollection(Long id, String name);
+//    @Query(value = """
+//          SELECT * FROM litera_vibe.collections
+//          WHERE author_id =:id AND name=:name
+//            """, nativeQuery = true)
+//    Optional<Collection> findByAuthorIdUserBookCollection(Long id, String name);
 
     @Query(value = """
           SELECT book_id FROM litera_vibe.collections_distribution 

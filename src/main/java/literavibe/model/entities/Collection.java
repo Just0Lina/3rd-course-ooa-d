@@ -18,17 +18,16 @@ public class Collection {
 
     private String name;
 
-    private Integer number;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "author_id")
 //    @ToString.Exclude
 //    private User author;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "media_id")
-    @ToString.Exclude
-    private Media media;
+//
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+//    @JoinColumn(name = "media_id")
+//    @ToString.Exclude
+//    private Media media;
 
 /**
  * @deprecated
@@ -46,14 +45,12 @@ public class Collection {
     @Deprecated()
     private Set<Book> books;
 
-    @ToString.Exclude
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User author;
+//    @ToString.Exclude
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private User author;
 
-    public Collection(String name, Integer number, User author) {
+    public Collection(String name) {
         this.name = name;
-        this.number = number;
-        this.author = author;
     }
 }

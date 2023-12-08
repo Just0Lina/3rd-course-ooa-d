@@ -2,6 +2,7 @@ package literavibe.services.impl;
 
 import literavibe.model.dto.BookDto;
 
+import literavibe.model.dto.DateToYearConverter;
 import literavibe.model.dto.IdDto;
 import literavibe.model.entities.Book;
 import literavibe.model.entities.Collection;
@@ -52,24 +53,15 @@ public class CollectionServiceImpl implements CollectionService {
     @Transactional
     public ResponseEntity<Void> addBookToCollection(Long bookId, Long collectionId) throws NotFoundException,
             AuthException {
-        User user = FindUtils.findUser(userRepository, AuthServiceCommon.getUserLogin());
         Collection collection = FindUtils.findCollection(collectionRepository, collectionId);
-        if (!user.equals(collection.getAuthor())) {
-            throw new AuthException("No rights");
-        }
         Book book = FindUtils.findBook(bookRepository, bookId);
         collectionRepository.addBookToCollection(book.getId(), collection.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> deleteBookFromCollection(Long bookId, Long collectionId) throws NotFoundException,
-            AuthException {
-        User user = FindUtils.findUser(userRepository, AuthServiceCommon.getUserLogin());
+    public ResponseEntity<Void> deleteBookFromCollection(Long bookId, Long collectionId) throws NotFoundException{
         Collection collection = FindUtils.findCollection(collectionRepository, collectionId);
-        if (collection.getAuthor() == null || !user.equals(collection.getAuthor())) {
-            throw new AuthException("No rights");
-        }
         Book book = FindUtils.findBook(bookRepository, bookId);
         collectionRepository.deleteBookFromCollection(book.getId(), collection.getId());
         return new ResponseEntity<>(HttpStatus.OK);
@@ -79,6 +71,7 @@ public class CollectionServiceImpl implements CollectionService {
     public ResponseEntity<List<BookDto>> getCollectionBooksById(Long id) throws NotFoundException {
         List<Long> bookIds = collectionRepository.findBookIdsInCollection(id);
         List<Book> books = bookRepository.findByIds(bookIds);
+        mapper.addConverter(new DateToYearConverter());
         List<BookDto> bookDtos = books.stream().map(
                 element -> mapper.map(element, BookDto.class)).toList();
         return ResponseEntity.ok(bookDtos);
@@ -90,9 +83,7 @@ public class CollectionServiceImpl implements CollectionService {
         Optional<Collection> collectionTmp = collectionRepository.findByName("Liked_" + user.getLogin());
         Collection collection;
         if (collectionTmp.isEmpty()) {
-            collection = new Collection("Liked_" + user.getLogin(), 0, user);
-            collectionRepository.save(collection);
-            return new ResponseEntity<>(HttpStatus.OK);
+            collection = collectionRepository.save(new Collection("Liked_" + user.getLogin()));
         } else {
             collection = collectionTmp.get();
         }
@@ -106,9 +97,7 @@ public class CollectionServiceImpl implements CollectionService {
         Optional<Collection> collectionTmp = collectionRepository.findByName("Read_" + user.getLogin());
         Collection collection;
         if (collectionTmp.isEmpty()) {
-            collection = new Collection("Read_" + user.getLogin(), 0, user);
-            collectionRepository.save(collection);
-            return new ResponseEntity<>(HttpStatus.OK);
+            collection = collectionRepository.save(new Collection("Read_" + user.getLogin()));
         } else {
             collection = collectionTmp.get();
         }
@@ -116,5 +105,31 @@ public class CollectionServiceImpl implements CollectionService {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
+
+    @Override
+    public ResponseEntity<Void> deleteBookRead(Long bookId) throws NotFoundException {
+        User user = FindUtils.findUser(userRepository, AuthServiceCommon.getUserLogin());
+        Optional<Collection> collectionTmp = collectionRepository.findByName("Read_" + user.getLogin());
+        Collection collection;
+        if (collectionTmp.isEmpty()) {
+            collection = collectionRepository.save(new Collection("Read_" + user.getLogin()));
+        } else {
+            collection = collectionTmp.get();
+        }
+        deleteBookFromCollection(bookId, collection.getId());
+        return new ResponseEntity<>(HttpStatus.OK);}
+
+    @Override
+    public ResponseEntity<Void> deleteBookLiked(Long bookId) throws NotFoundException {
+        User user = FindUtils.findUser(userRepository, AuthServiceCommon.getUserLogin());
+        Optional<Collection> collectionTmp = collectionRepository.findByName("Liked_" + user.getLogin());
+        Collection collection;
+        if (collectionTmp.isEmpty()) {
+            collection = collectionRepository.save(new Collection("Liked_" + user.getLogin()));
+        } else {
+            collection = collectionTmp.get();
+        }
+        deleteBookFromCollection(bookId, collection.getId());
+        return new ResponseEntity<>(HttpStatus.OK);}
 
 }

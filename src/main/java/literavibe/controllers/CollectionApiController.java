@@ -41,6 +41,16 @@ public class CollectionApiController implements CollectionApi {
 
     }
 
+    @Override
+    public ResponseEntity<Void> deleteBookRead(Long bookId) throws NotFoundException, AuthException {
+        return service.deleteBookRead(bookId);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteBookLiked(Long bookId) throws NotFoundException, AuthException {
+        return service.deleteBookLiked(bookId);
+    }
+
 
     @Override
     public ResponseEntity<Void> collectionContentPost(Long book, Long collectionId) throws NotFoundException, AuthException {

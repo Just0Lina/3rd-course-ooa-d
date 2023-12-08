@@ -37,6 +37,16 @@ public interface CollectionApi {
     ResponseEntity<Void> bookLiked(@RequestParam("book_id") @PositiveOrZero Long bookId) throws
             NotFoundException, AuthException;
 
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    @DeleteMapping(value = "/read")
+    ResponseEntity<Void> deleteBookRead(@RequestParam("book_id") @PositiveOrZero Long bookId) throws
+            NotFoundException, AuthException;
+
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    @DeleteMapping(value = "/liked")
+    ResponseEntity<Void> deleteBookLiked(@RequestParam("book_id") @PositiveOrZero Long bookId) throws
+            NotFoundException, AuthException;
+
     @GetMapping(value = "/{id}")
     ResponseEntity<List<BookDto>> getBooksFromCollection(@PathVariable(value = "id") Long id)
             throws NotFoundException, AuthException, BadRequestException;
