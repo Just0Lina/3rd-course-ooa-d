@@ -14,4 +14,6 @@ public interface CategoryService {
     ResponseEntity<Void> deleteBooksFromCategory(Long id, Long bookId);
 
     ResponseEntity<Void> addCategoryToBook(Long id, Long categoryId);
+
+    ResponseEntity<List<CategoryDto>> getBookCategories(Long id);
 }

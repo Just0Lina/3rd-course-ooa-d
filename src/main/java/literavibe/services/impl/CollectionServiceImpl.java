@@ -77,11 +77,44 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public ResponseEntity<List<BookDto>> getCollectionBooksById(Long id) throws NotFoundException {
-        List<Long> resipesIds = collectionRepository.findBookIdsInCollection(id);
-        List<Book> books = bookRepository.findByIds(resipesIds);
+        List<Long> bookIds = collectionRepository.findBookIdsInCollection(id);
+        List<Book> books = bookRepository.findByIds(bookIds);
         List<BookDto> bookDtos = books.stream().map(
                 element -> mapper.map(element, BookDto.class)).toList();
         return ResponseEntity.ok(bookDtos);
+    }
+
+    @Override
+    public ResponseEntity<Void> addLikedBook(Long bookId) throws NotFoundException, AuthException {
+        User user = FindUtils.findUser(userRepository, AuthServiceCommon.getUserLogin());
+        Optional<Collection> collectionTmp = collectionRepository.findByName("Liked_" + user.getLogin());
+        Collection collection;
+        if (collectionTmp.isEmpty()) {
+            collection = new Collection("Liked_" + user.getLogin(), 0, user);
+            collectionRepository.save(collection);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            collection = collectionTmp.get();
+        }
+        addBookToCollection(bookId, collection.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> addReadBook(Long bookId) throws NotFoundException, AuthException {
+        User user = FindUtils.findUser(userRepository, AuthServiceCommon.getUserLogin());
+        Optional<Collection> collectionTmp = collectionRepository.findByName("Read_" + user.getLogin());
+        Collection collection;
+        if (collectionTmp.isEmpty()) {
+            collection = new Collection("Read_" + user.getLogin(), 0, user);
+            collectionRepository.save(collection);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            collection = collectionTmp.get();
+        }
+        addBookToCollection(bookId, collection.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 }

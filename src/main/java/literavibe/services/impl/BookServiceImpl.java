@@ -1,14 +1,13 @@
 package literavibe.services.impl;
 
-import literavibe.model.dto.AuthorMapper;
-import literavibe.model.dto.DateToYearConverter;
+import literavibe.model.dto.*;
+import literavibe.model.entities.Collection;
+import literavibe.security.service.impl.AuthServiceCommon;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import literavibe.model.dto.IdDto;
-import literavibe.model.dto.BookDto;
 import literavibe.model.entities.*;
 import literavibe.model.exceptions.AuthException;
 import literavibe.model.exceptions.BadRequestException;
@@ -27,18 +26,21 @@ public class BookServiceImpl implements BookService {
     private final UserRepository userRepository;
     private final MarkRepository markRepository;
     private final MediaRepository mediaRepository;
+    private final CollectionRepository collectionRepository;
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository,  ModelMapper mapper,
-                             AvgMarkRepository avgMarkRepository,
-                             MarkRepository markRepository, UserRepository userRepository,
-                             MediaRepository mediaRepository) {
+    public BookServiceImpl(BookRepository bookRepository, ModelMapper mapper,
+                           AvgMarkRepository avgMarkRepository,
+                           MarkRepository markRepository, UserRepository userRepository,
+                           MediaRepository mediaRepository,
+                           CollectionRepository collectionRepository) {
 
         this.bookRepository = bookRepository;
         this.mapper = mapper;
         this.userRepository = userRepository;
         this.markRepository = markRepository;
         this.mediaRepository = mediaRepository;
+        this.collectionRepository = collectionRepository;
     }
 
 
@@ -82,6 +84,7 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteById(bookId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @Override
     public ResponseEntity<IdDto> updateBook(BookDto bookDto) throws NotFoundException, BadRequestException,
             AuthException {
@@ -114,5 +117,28 @@ public class BookServiceImpl implements BookService {
     public ResponseEntity<List<BookDto>> filterContent(Integer limit) throws NotFoundException {
         SlopeOne recommendAlgSlopeOne = new SlopeOne(mapper, userRepository, markRepository, bookRepository);
         return ResponseEntity.ok(recommendAlgSlopeOne.recommendAlgSlopeOne(limit));
+    }
+
+    @Override
+    public ResponseEntity<List<BookDto>> getLikedBook() throws NotFoundException {
+        User user = FindUtils.findUser(userRepository, AuthServiceCommon.getUserLogin());
+        Collection collection = collectionRepository.findByName("Liked_" + user.getLogin()).orElseThrow(() -> new NotFoundException("No such collection"));
+        return getListResponseEntity(collection);
+    }
+
+    private ResponseEntity<List<BookDto>> getListResponseEntity(Collection collection) {
+        List<Long> bookIds = collectionRepository.findBookIdsInCollection(collection.getId());
+        List<Book> books = bookRepository.findByIds(bookIds);
+        List<BookDto> bookDtos = books.stream().map(
+                element -> mapper.map(element, BookDto.class)).toList();
+        return ResponseEntity.ok(bookDtos);
+    }
+
+
+    @Override
+    public ResponseEntity<List<BookDto>> getReadBook() throws NotFoundException {
+        User user = FindUtils.findUser(userRepository, AuthServiceCommon.getUserLogin());
+        Collection collection = collectionRepository.findByName("Read_" + user.getLogin()).orElseThrow(() -> new NotFoundException("No such collection"));
+        return getListResponseEntity(collection);
     }
 }

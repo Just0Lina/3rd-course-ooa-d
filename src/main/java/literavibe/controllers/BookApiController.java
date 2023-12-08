@@ -1,5 +1,6 @@
 package literavibe.controllers;
 
+import literavibe.model.dto.CategoryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,6 +31,16 @@ public class BookApiController implements BookApi {
     @Override
     public ResponseEntity<BookDto> bookIdGet(Long id) throws NotFoundException, AuthException {
         return bookService.getBookById(id);
+    }
+
+    @Override
+    public ResponseEntity<List<BookDto>> booksRead() throws NotFoundException, AuthException {
+        return bookService.getReadBook();
+    }
+
+    @Override
+    public ResponseEntity<List<BookDto>> booksLiked() throws NotFoundException, AuthException {
+        return bookService.getLikedBook();
     }
 
 

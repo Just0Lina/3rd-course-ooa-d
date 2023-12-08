@@ -19,6 +19,11 @@ public interface CategoryApi {
     @GetMapping
     ResponseEntity<List<CategoryDto>> categoriesGet() throws NotFoundException;
 
+    @GetMapping(value = "/book/{id}")
+    ResponseEntity<List<CategoryDto>> bookCategoriesGet(
+            @PathVariable("id") @PositiveOrZero(message = "book id must be not negative") Long id) throws
+            NotFoundException, AuthException;
+
     @GetMapping(value = "/{id}")
     ResponseEntity<List<BookDto>> categoriesGetById(@PathVariable(value = "id") Long id,
                                                       @RequestParam(value = "limit", required = false) @PositiveOrZero Integer limit)

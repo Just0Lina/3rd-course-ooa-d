@@ -20,10 +20,10 @@ public class Collection {
 
     private Integer number;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
-    @ToString.Exclude
-    private User author;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "author_id")
+//    @ToString.Exclude
+//    private User author;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "media_id")
@@ -45,6 +45,11 @@ public class Collection {
     @Setter(AccessLevel.NONE)
     @Deprecated()
     private Set<Book> books;
+
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User author;
 
     public Collection(String name, Integer number, User author) {
         this.name = name;

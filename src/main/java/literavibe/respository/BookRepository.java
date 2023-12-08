@@ -69,4 +69,5 @@ public interface BookRepository extends CrudRepository<Book, Long> {
                    WHERE id in :ids
             """, nativeQuery = true)
     List<Book> findByIds(@Param("ids") List<Long> booksIds);
+
 }

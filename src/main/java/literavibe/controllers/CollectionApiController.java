@@ -31,6 +31,18 @@ public class CollectionApiController implements CollectionApi {
     }
 
     @Override
+    public ResponseEntity<Void> bookRead(Long bookId) throws NotFoundException, AuthException {
+        return service.addReadBook(bookId);
+    }
+
+    @Override
+    public ResponseEntity<Void> bookLiked(Long bookId) throws NotFoundException, AuthException {
+        return service.addLikedBook(bookId);
+
+    }
+
+
+    @Override
     public ResponseEntity<Void> collectionContentPost(Long book, Long collectionId) throws NotFoundException, AuthException {
         return service.addBookToCollection(book, collectionId);
     }

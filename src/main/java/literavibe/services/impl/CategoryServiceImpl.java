@@ -60,4 +60,14 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.addBookToCategory(id, categoryId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<List<CategoryDto>> getBookCategories(Long id) {
+        List<Category> categories = categoryRepository.findCategoriesWithBookId(id);
+
+        modelMapper.addConverter(new DateToYearConverter());
+        List<CategoryDto> categoryDtos = categories.stream().map(
+                element -> modelMapper.map(element, CategoryDto.class)).toList();
+        return ResponseEntity.ok(categoryDtos);
+    }
 }

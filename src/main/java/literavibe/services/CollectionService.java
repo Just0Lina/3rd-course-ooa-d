@@ -15,4 +15,8 @@ public interface CollectionService {
 
 
     ResponseEntity<List<BookDto>> getCollectionBooksById(Long id) throws NotFoundException;
+
+    ResponseEntity<Void> addLikedBook(Long bookId) throws NotFoundException, AuthException;
+
+    ResponseEntity<Void> addReadBook(Long bookId) throws NotFoundException, AuthException;
 }

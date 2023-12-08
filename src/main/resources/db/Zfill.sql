@@ -28,6 +28,8 @@ VALUES ('J.K.', 'Rowling', 'Bestselling author of Harry Potter series'),
        ('George', 'Orwell', 'Known for 1984 and Animal Farm'),
        ('Jane', 'Austen', 'Classic author of Pride and Prejudice'),
        ('Stephen', 'King', 'Master of horror fiction'),
+       ('Илья', 'Ильф', 'Русский советский писатель'),
+       ('Евгений', 'Петров','Русский советский писатель'),
        ('Agatha', 'Christie', 'Queen of mystery novels');
 
 -- Insert data into publishers
@@ -40,11 +42,12 @@ VALUES ('Publisher A', '1234567890123', 'pubpassword1'),
 
 -- Insert data into books
 INSERT INTO litera_vibe.books (name, media_id, pages, info, year, publisher_id)
-VALUES ('Book 1', 1, 300, 'Fantasy novel', '2020-01-01', 1),
-       ('Book 2', 2, 250, 'Dystopian fiction', '2018-05-15', 2),
-       ('Book 3',  3, 400, 'Classic romance', '1813-01-28', 3),
-       ('Book 4',  4, 500, 'Horror thriller', '1974-04-01', 4),
-       ('Book 5', 5, 350, 'Mystery novel', '1920-01-01', 5);
+VALUES ('Гарри Поттер и философский камень', 1, 300, 'Fantasy novel', '2020-01-01', 1),
+       ('Гарри Поттер и тайная комната', 2, 250, 'Dystopian fiction', '2018-05-15', 2),
+       ('1984',  3, 400, 'Антиутория', '1813-01-28', 3),
+       ('Скотный двор',  4, 500, 'Horror thriller', '1974-04-01', 4),
+       ('12 стульев',  6, 200, 'Horror thriller', '1974-04-01', 4),
+       ('Гордость и предубеждение', 5, 350, 'Classic romance', '1920-01-01', 5);
 
 
 -- Insert data into comments
@@ -119,6 +122,8 @@ VALUES (1, 1), -- Author 1 associated with Book 1
        (1, 2), -- Author 1 associated with Book 2
        (2, 3), -- Author 2 associated with Book 3
        (2, 4), -- Author 2 associated with Book 4
+       (6, 6), -- Author 2 associated with Book 4
+       (7, 6), -- Author 2 associated with Book 4
        (3, 5); -- Author 3 associated with Book 5
 
 INSERT INTO litera_vibe.user_role(user_id, role_id)
@@ -129,3 +134,14 @@ CREATE extension IF NOT EXISTS pgcrypto;
 
 UPDATE litera_vibe.users
 SET password = crypt(password, gen_salt('bf', 8));
+
+insert into litera_vibe.media (type_id, file_data) values
+                (1, pg_read_file('/home/alina/3rd-course-ooa-d/src/main/resources/img/1.jpeg')::bytea),
+                (1, pg_read_file('/home/alina/3rd-course-ooa-d/src/main/resources/img/2.jpg')::bytea),
+(1, pg_read_file('/home/alina/3rd-course-ooa-d/src/main/resources/img/3.jpeg')::bytea),
+(1, pg_read_file('/home/alina/3rd-course-ooa-d/src/main/resources/img/5.jpg')::bytea),
+(1, pg_read_file('/home/alina/3rd-course-ooa-d/src/main/resources/img/6.jpeg')::bytea),
+(1, pg_read_file('/home/alina/3rd-course-ooa-d/src/main/resources/img/4.jpeg')::bytea);
+
+
+select * from litera_vibe.media;

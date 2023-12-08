@@ -30,6 +30,11 @@ public class CategoryApiController implements CategoryApi {
     }
 
     @Override
+    public ResponseEntity<List<CategoryDto>> bookCategoriesGet(Long id) throws NotFoundException, AuthException {
+        return service.getBookCategories(id);
+    }
+
+    @Override
     public ResponseEntity<List<BookDto>> categoriesGetById(Long id, Integer limit) throws NotFoundException, AuthException, BadRequestException {
        return service.getBooksFromCategory(id, limit);
     }

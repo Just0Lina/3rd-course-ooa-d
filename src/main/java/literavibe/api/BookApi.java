@@ -1,5 +1,6 @@
 package literavibe.api;
 
+import literavibe.model.dto.CategoryDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +27,17 @@ public interface BookApi {
     ResponseEntity<BookDto> bookIdGet(
             @PathVariable("id") @PositiveOrZero(message = "book id must be not negative") Long id) throws
             NotFoundException, AuthException;
+
+
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    @GetMapping(value = "/read")
+    ResponseEntity<List<BookDto>> booksRead() throws
+            NotFoundException, AuthException;
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    @GetMapping(value = "/liked")
+    ResponseEntity<List<BookDto>> booksLiked() throws
+            NotFoundException, AuthException;
+
 
 
 

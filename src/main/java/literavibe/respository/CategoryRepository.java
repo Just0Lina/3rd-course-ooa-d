@@ -34,11 +34,11 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
             INSERT INTO litera_vibe.categories_distribution(category_id, book_id) VALUES (:categoryId, :bookId);
             """, nativeQuery = true)
     void addBookToCategory(Long bookId, Long categoryId);
-
+    
     @Query(value = """
-            WITH categoriesIds AS (SELECT  category_id FROM litera_vibe.categories_distribution 
+            WITH categoriesIds AS (SELECT category_id FROM litera_vibe.categories_distribution 
             WHERE book_id=:id)
             SELECT * FROM litera_vibe.categories where id in (SELECT category_id from categoriesIds)
               """, nativeQuery = true)
-    List<Category> findByBookId(Long id);
+    List<Category> findCategoriesWithBookId(Long id);
 }

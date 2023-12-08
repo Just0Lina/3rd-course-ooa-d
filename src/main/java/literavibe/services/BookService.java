@@ -1,5 +1,6 @@
 package literavibe.services;
 
+import literavibe.model.dto.CategoryDto;
 import org.springframework.http.ResponseEntity;
 import literavibe.model.dto.IdDto;
 import literavibe.model.dto.BookDto;
@@ -22,4 +23,9 @@ public interface BookService {
     ResponseEntity<Void> deleteBook(Long id) throws NotFoundException;
 
     ResponseEntity<List<BookDto>> filterContent(Integer limit) throws AuthException, NotFoundException;
+
+    ResponseEntity<List<BookDto>> getLikedBook() throws NotFoundException;
+
+
+    ResponseEntity<List<BookDto>> getReadBook() throws NotFoundException;
 }
