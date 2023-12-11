@@ -32,4 +32,9 @@ public class FindUtils {
         return repository.findById(mediaId).orElseThrow(
                 () -> new NotFoundException("Couldn't find media with id: " + mediaId));
     }
+
+    public static Note findNote(NoteRepository repository, Long id) throws NotFoundException {
+        return repository.findById(id).orElseThrow(
+                () -> new NotFoundException("Couldn't find Note with id: " + id));
+    }
 }

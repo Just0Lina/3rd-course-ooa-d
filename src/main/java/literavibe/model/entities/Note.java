@@ -13,8 +13,8 @@ import java.util.Objects;
 @Setter
 @ToString
 @Entity
-@Table(name = "comments", schema = "litera_vibe")
-public class Comment {
+@Table(name = "notes", schema = "litera_vibe")
+public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -27,12 +27,9 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-//    @ToString.Exclude
+    @ToString.Exclude
     private User user;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date")
-    private Date postTime;
 
     @Column(name = "content")
     private String content;
@@ -52,8 +49,8 @@ public class Comment {
         if (thisEffectiveClass != oEffectiveClass) {
             return false;
         }
-        Comment comment = (Comment) o;
-        return getId() != null && Objects.equals(getId(), comment.getId());
+        Note note = (Note) o;
+        return getId() != null && Objects.equals(getId(), note.getId());
     }
 
     @Override

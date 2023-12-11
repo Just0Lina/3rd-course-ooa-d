@@ -1,6 +1,8 @@
 package literavibe.services.impl;
 
+import literavibe.model.dto.BookDto;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,10 +70,19 @@ public class CommentServiceImpl implements CommentService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
     @Override
     public ResponseEntity<List<CommentDto>> getBookComments(Long id) {
         List<Comment> comments = commentRepository.getCommentsByBookId(id);
-        List<CommentDto> dtos = comments.stream().map((comment) -> mapper.map(comment, CommentDto.class)).toList();
+        System.out.println(comments);
+        List<CommentDto> dtos = comments.stream()
+                .map(comment -> {
+                    CommentDto dto = mapper.map(comment, CommentDto.class);
+                    dto.setLogin(comment.getUser().getLogin());
+                    return dto;
+                })
+                .toList();
+
         return ResponseEntity.ok(dtos);
     }
 }
