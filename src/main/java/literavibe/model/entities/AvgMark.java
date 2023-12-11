@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Objects;
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -27,5 +29,18 @@ public class AvgMark {
     @JoinColumn(name = "book_id")
     @MapsId
     private Book book;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AvgMark avgMark1 = (AvgMark) o;
+        return Objects.equals(bookId, avgMark1.bookId) && Objects.equals(avgMark, avgMark1.avgMark) && Objects.equals(quantity, avgMark1.quantity) && Objects.equals(book, avgMark1.book);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookId, avgMark, quantity, book);
+    }
 
 }
