@@ -67,11 +67,16 @@ public class MarkServiceImpl implements MarkService {
     @Override
     public ResponseEntity<MarkDto> getBookMark(String userId, Long bookId) throws NotFoundException {
         User user = FindUtils.findUser(userRepository, userId);
+        System.out.println(user);
         Optional<Mark> mark = markRepository.findById(new MarkKey(user.getId(), bookId));
         if (mark.isEmpty()) {
             throw new NotFoundException("Couldn't find mark by " + userId + " for book with id: " + bookId);
         }
-        return ResponseEntity.ok(mapper.map(mark, MarkDto.class));
+        System.out.println(mark);
+        MarkDto markDto = mapper.map(mark.get(), MarkDto.class);
+        markDto.setLogin(user.getLogin());
+        System.out.println(markDto);
+        return ResponseEntity.ok(markDto);
     }
 
     @Override
